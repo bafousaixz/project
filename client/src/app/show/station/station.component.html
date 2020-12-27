@@ -1,0 +1,54 @@
+<div class="container card" style="margin-top: 50px;">
+    <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">IOT - IMAGE</h1>
+    <hr class="mt-2 mb-5">
+  
+    <div class="row text-center text-lg-left">
+      <div *ngFor="let iot of stations$ | async | paginate: { itemsPerPage: 20, currentPage: p }" class="col-lg-3 col-md-4 col-6">
+        <a (click)="show(iot)" class="d-block mb-4 h-100 ">
+          <img class="img-fluid img-thumbnail" [src]="iot.filename" alt="" height="300px">
+        </a>
+      </div>
+      <pagination-controls (pageChange)="p = $event" style="margin-top: 20px;"></pagination-controls>
+    </div>
+    <div *ngIf="popup" class="container-popup">
+        <div class="blog-card edit-popup">
+            <button (click)="popup = false" class="btn-close"><i class="fas fa-times"></i></button>
+          <div class="inner-part" >
+            <label class="img">
+              <img class="img-1" [src]="station.filename" alt="">
+            </label>
+            <div *ngIf="label === 'rainflow'" class="content1">
+              <span> <i class="fas fa-cloud-showers-heavy"></i></span>
+              <span> {{station.time*1000 | date:'medium'}}</span>
+              <span>
+                RainFlows: {{station.rainflow}} mm
+              </span>
+              <span *ngIf="station.detect_content" style="color: #d35400;">
+                Detect: {{station.detect_content}}
+              </span>
+            </div>
+            <div *ngIf="label === 'windspeed'" class="content1">
+              <span><i class="fas fa-wind"></i></span>
+              <span> {{station.time*1000 | date:'medium'}}</span>
+              <span>
+                WindSpeed: {{station.windspeed}} km/h
+              </span>
+              <span *ngIf="station.detect_content" style="color: #d35400;">
+                Detect: {{station.detect_content}}
+              </span>
+            </div>
+
+            <div *ngIf="label === 'temp'" class="content1">
+              <span><i class="fas fa-temperature-low"></i></span>
+              <span> {{station.time*1000 | date:'medium'}}</span>
+              <span>
+                Temp: {{station.temp}} <sup>o</sup>C
+              </span>
+              <span *ngIf="station.detect_content" style="color: #d35400;">
+                Detect: {{station.detect_content}}
+              </span>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
